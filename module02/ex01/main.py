@@ -1,7 +1,24 @@
 
-def what_are_the_vars(*args):
-	pass
+def what_are_the_vars(*args, **kwargs):
+	obj = ObjectC()
 
+	# handling None
+	if not args and not kwargs:
+		return None
+
+	# handling args
+	list_of_args = [arg for arg in args]
+	for i in range(0, len(list_of_args)):
+		setattr(obj, f"var_{str(i)}", list_of_args[i])
+
+	# handling kwargs
+	kwarg_dir = {key: value for key, value in kwargs.items()}
+	for key, value in kwarg_dir.items():
+		if hasattr(obj, key):
+			return None
+		setattr(obj, key, value)
+
+	return(obj)
 
 class ObjectC(object):
 	def __init__(self):
